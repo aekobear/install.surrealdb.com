@@ -28,6 +28,8 @@ INSTALL_DIR="/usr/local/bin"
 
 SURREALDB_ROOT="https://download.surrealdb.com"
 
+WORKING_DIR=$(pwd)
+
 expand() {
     case "$1" in
     (\~)        echo "$HOME";;
@@ -73,7 +75,6 @@ install() {
                 ;;
             *)
                 INSTALL_DIR="$1"
-                shift
                 ;;
         esac
         shift
@@ -250,8 +251,10 @@ install() {
         fi
         mkdir -p "$_loc"
     fi
-        
-    mv "surreal" "$_loc" 2>/dev/null || {
+
+    cd $WORKING_DIR
+
+    mv "/tmp/surreal" "$_loc" 2>/dev/null || {
         err "Error: we couldn't install the 'surreal' binary into $_loc"
     }
     
